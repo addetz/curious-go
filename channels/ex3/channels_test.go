@@ -7,6 +7,10 @@ import (
 	enums "github.com/addetz/curious-go/enums/ex6"
 )
 
+const (
+	RUN_COUNT int = 10
+)
+
 func TestAddStock(t *testing.T) {
 	store := channels.NewStore()
 	testCases := map[string]struct {
@@ -39,15 +43,18 @@ func TestAddStock(t *testing.T) {
 		},
 	}
 
-	for name, tc := range testCases {
-		t.Run(name, func(t *testing.T) {
-			currentName, currentTc := name, tc
-			t.Parallel()
-			stock := store.AddStock(currentTc.book, currentTc.increment)
-			stockIncrement := stock.CurrentCount - stock.PreviousCount
-			if stockIncrement != currentTc.increment {
-				t.Fatalf("[%s]: incorrect increment; got %d, want %d", currentName, stockIncrement, currentTc.increment)
-			}
-		})
+	// increase chances of error 
+	for i := 0; i < RUN_COUNT; i++ {
+		for name, tc := range testCases {
+			t.Run(name, func(t *testing.T) {
+				currentName, currentTc := name, tc
+				t.Parallel()
+				stock := store.AddStock(currentTc.book, currentTc.increment)
+				stockIncrement := stock.CurrentCount - stock.PreviousCount
+				if stockIncrement != currentTc.increment {
+					t.Fatalf("[%s]: incorrect increment; got %d, want %d", currentName, stockIncrement, currentTc.increment)
+				}
+			})
+		}
 	}
 }
