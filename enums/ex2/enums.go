@@ -12,7 +12,7 @@ package enums
 	Technical : 5
 	Biography : 6
 	----------------------------
-	
+
 	Read more: https://www.gopherguides.com/articles/how-to-use-iota-in-golang
 **/
 

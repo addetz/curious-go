@@ -4,7 +4,7 @@ import (
 	"log"
 	"testing"
 
-	enums "github.com/addetz/curious-go/tests/ex2"
+	enums "github.com/addetz/curious-go/enums/ex6"
 )
 
 func TestBookCategory(t *testing.T) {
@@ -42,9 +42,9 @@ func TestBookCategory(t *testing.T) {
 
 	for name, tc := range testCases {
 		t.Run(name, func(t *testing.T) {
-			currentName, currentTc  := name, tc
+			currentName, currentTc := name, tc
 			t.Parallel()
-			book := enums.CreateBook(currentTc.title , currentTc.category, currentTc.format)
+			book := enums.CreateBook(currentTc.title, currentTc.category, currentTc.format)
 			log.Println(book)
 			if book.Category != enums.BookCategory(currentTc.expectedCategory) {
 				t.Fatalf("[%s]: incorrect category; got %d, want %d", currentName, book.Category, currentTc.expectedCategory)

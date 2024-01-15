@@ -44,7 +44,7 @@ func (s *Store) AddStock(b enums.Book, c int) Stock {
 	req := &stockRequest{
 		book:      b,
 		increment: c,
-		result: result,
+		result:    result,
 	}
 	s.requests <- req
 	res := <-result

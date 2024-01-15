@@ -5,21 +5,21 @@ import (
 )
 
 type Stock struct {
-	CurrentCount int
+	CurrentCount  int
 	PreviousCount int
-	Book  enums.Book
+	Book          enums.Book
 }
 
 func NewStock(book enums.Book, count int) *Stock {
 	return &Stock{
-		Book: book,
+		Book:         book,
 		CurrentCount: count,
 	}
 }
 
 type stockRequest struct {
 	increment int
-	book enums.Book
+	book      enums.Book
 }
 
 type Store struct {
@@ -34,7 +34,7 @@ func NewStore() *Store {
 
 func (s *Store) AddStock(b enums.Book, c int) Stock {
 	req := stockRequest{
-		book:  b,
+		book:      b,
 		increment: c,
 	}
 

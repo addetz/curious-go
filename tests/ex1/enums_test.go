@@ -3,7 +3,7 @@ package enums_test
 import (
 	"testing"
 
-	enums "github.com/addetz/curious-go/tests/ex1"
+	enums "github.com/addetz/curious-go/enums/ex6"
 )
 
 func TestBookCategory(t *testing.T) {

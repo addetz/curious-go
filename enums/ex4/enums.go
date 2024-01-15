@@ -12,7 +12,7 @@ package enums
 	Technical : 5
 	Biography : 6
 	----------------------------
-	
+
 	Read more: https://www.gopherguides.com/articles/how-to-use-iota-in-golang
 **/
 
@@ -21,7 +21,7 @@ type BookFormat string
 
 const (
 	// New developer joins the team
-  Print BookFormat = "Paperback"
+	Print BookFormat = "Paperback"
 	Ebook BookFormat = "Ebook"
 
 	Novel BookCategory = iota + 1
@@ -35,13 +35,13 @@ const (
 type Book struct {
 	Title    string       `json:"title"`
 	Category BookCategory `json:"category"`
-	Format BookFormat `json:"format"`
+	Format   BookFormat   `json:"format"`
 }
 
 func CreateBook(title string, category BookCategory, format BookFormat) *Book {
 	return &Book{
 		Title:    title,
 		Category: category,
-		Format: format,
+		Format:   format,
 	}
 }
