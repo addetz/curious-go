@@ -1,7 +1,6 @@
 package enums_test
 
 import (
-	"log"
 	"testing"
 
 	enums "github.com/addetz/curious-go/tests/ex1"
@@ -44,7 +43,7 @@ func TestBookCategory(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			book := enums.CreateBook(tc.title, tc.category, tc.format)
-			log.Println(book)
+			// log.Println(book)
 			if book.Category != enums.BookCategory(tc.expectedCategory) {
 				t.Fatalf("[%s]: incorrect category; got %d, want %d", name, book.Category, tc.expectedCategory)
 			}
