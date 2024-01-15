@@ -3,7 +3,7 @@ package channels_test
 import (
 	"testing"
 
-	channels "github.com/addetz/curious-go/channels/ex3"
+	channels "github.com/addetz/curious-go/channels/ex4"
 	enums "github.com/addetz/curious-go/enums/ex6"
 )
 

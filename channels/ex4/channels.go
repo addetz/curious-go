@@ -20,39 +20,41 @@ func NewStock(book enums.Book, count int) *Stock {
 type stockRequest struct {
 	increment int
 	book      enums.Book
+	result    chan Stock
 }
 
 type Store struct {
 	stocks   []*Stock
 	requests chan *stockRequest
-	results  chan Stock
 }
 
 func NewStore() *Store {
 	ns := &Store{
 		stocks:   make([]*Stock, 0),
-		requests: make(chan *stockRequest),
-		results:  make(chan Stock),
+		requests: make(chan *stockRequest, 1),
 	}
 
+	go ns.processRequests()
 	go ns.processRequests()
 	return ns
 }
 
 func (s *Store) AddStock(b enums.Book, c int) Stock {
+	result := make(chan Stock)
 	req := &stockRequest{
 		book:      b,
 		increment: c,
+		result: result,
 	}
 	s.requests <- req
-	res := <-s.results
+	res := <-result
 	return res
 }
 
 func (s *Store) processRequests() {
 	for req := range s.requests {
 		stock := s.handleUpdate(req)
-		s.results <- stock
+		req.result <- stock
 	}
 }
 
