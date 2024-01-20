@@ -43,7 +43,7 @@ func TestAddStock(t *testing.T) {
 		},
 	}
 
-	// increase chances of error 
+	// increase chances of error
 	for i := 0; i < RUN_COUNT; i++ {
 		for name, tc := range testCases {
 			t.Run(name, func(t *testing.T) {
