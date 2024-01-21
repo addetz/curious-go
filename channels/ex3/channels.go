@@ -1,72 +1,63 @@
 package channels
 
 import (
-	enums "github.com/addetz/curious-go/enums/ex6"
+	"sync"
+
+	enums "github.com/addetz/curious-go/channels"
 )
 
+type StockRequestType int
+
 type Stock struct {
-	CurrentCount  int
-	PreviousCount int
-	Book          enums.Book
+	Book  enums.Book
+	Count int
 }
 
-func NewStock(book enums.Book, count int) *Stock {
-	return &Stock{
-		Book:         book,
-		CurrentCount: count,
-	}
-}
-
-type stockRequest struct {
-	increment int
-	book      enums.Book
+type StockRequest struct {
+	Book  enums.Book
+	Count int
 }
 
 type Store struct {
-	stocks   []*Stock
-	requests chan *stockRequest
+	stock    sync.Map
+	requests chan StockRequest
 	results  chan Stock
 }
 
 func NewStore() *Store {
 	ns := &Store{
-		stocks:   make([]*Stock, 0),
-		requests: make(chan *stockRequest, 1),
-		results:  make(chan Stock, 1),
+		requests: make(chan StockRequest),
+		results:  make(chan Stock),
 	}
 
 	go ns.processRequests()
 	go ns.processRequests()
+
 	return ns
 }
 
-func (s *Store) AddStock(b enums.Book, c int) Stock {
-	req := &stockRequest{
-		book:      b,
-		increment: c,
-	}
+func (s *Store) ReceiveRequest(req StockRequest) Stock {
 	s.requests <- req
-	res := <-s.results
-	return res
+	return <-s.results
 }
 
 func (s *Store) processRequests() {
 	for req := range s.requests {
-		stock := s.handleUpdate(req)
+		stock := s.addStock(req.Book, req.Count)
 		s.results <- stock
 	}
 }
 
-func (s *Store) handleUpdate(req *stockRequest) Stock {
-	for _, cs := range s.stocks {
-		if cs.Book == req.book {
-			newCount := cs.CurrentCount + req.increment
-			cs.PreviousCount = cs.CurrentCount
-			cs.CurrentCount = newCount
-			return *cs
-		}
+func (s *Store) addStock(newBook enums.Book, count int) Stock {
+	newStock := Stock{
+		Book:  newBook,
+		Count: count,
 	}
-	newStock := NewStock(req.book, req.increment)
-	s.stocks = append(s.stocks, newStock)
-	return *newStock
+	if stock, ok := s.stock.Load(newBook.ID); ok {
+		existingStock := stock.(Stock)
+		newStock.Count += existingStock.Count
+	}
+
+	s.stock.Store(newBook.ID, newStock)
+	return newStock
 }

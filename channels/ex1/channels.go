@@ -1,52 +1,87 @@
 package channels
 
 import (
-	enums "github.com/addetz/curious-go/enums/ex6"
+	"fmt"
+	"log"
+
+	enums "github.com/addetz/curious-go/channels"
+)
+
+type StockRequestType int
+
+const (
+	AddStock StockRequestType = iota
+	GetStock
 )
 
 type Stock struct {
-	CurrentCount  int
-	PreviousCount int
-	Book          enums.Book
+	Book  enums.Book
+	Count int
 }
 
-func NewStock(book enums.Book, count int) *Stock {
-	return &Stock{
-		Book:         book,
-		CurrentCount: count,
-	}
-}
-
-type stockRequest struct {
-	increment int
-	book      enums.Book
+type StockRequest struct {
+	Book  enums.Book
+	Count int
+	Type  StockRequestType
 }
 
 type Store struct {
-	stocks []*Stock
+	stock    map[string]Stock
+	requests chan StockRequest
+	results  chan Stock
 }
 
 func NewStore() *Store {
-	return &Store{
-		stocks: make([]*Stock, 0),
+	ns := &Store{
+		stock:    make(map[string]Stock),
+		requests: make(chan StockRequest),
+		results:  make(chan Stock),
+	}
+
+	go ns.processRequests()
+
+	return ns
+}
+
+func (s *Store) ReceiveRequest(req StockRequest) Stock {
+	s.requests <- req
+	return <-s.results
+}
+
+func (s *Store) processRequests() {
+	for req := range s.requests {
+		switch req.Type {
+		case AddStock:
+			stock := s.addStock(req.Book, req.Count)
+			s.results <- stock
+		case GetStock:
+			stock, err := s.getStock(req.Book.ID)
+			if err != nil {
+				log.Println("processRequests:", err)
+			}
+			s.results <- *stock
+		}
 	}
 }
 
-func (s *Store) AddStock(b enums.Book, c int) Stock {
-	req := stockRequest{
-		book:      b,
-		increment: c,
+func (s *Store) addStock(newBook enums.Book, count int) Stock {
+	newStock := Stock{
+		Book:  newBook,
+		Count: count,
+	}
+	if stock, ok := s.stock[newBook.ID]; ok {
+		newStock.Count += stock.Count
 	}
 
-	for _, cs := range s.stocks {
-		if cs.Book == req.book {
-			newCount := cs.CurrentCount + req.increment
-			cs.PreviousCount = cs.CurrentCount
-			cs.CurrentCount = newCount
-			return *cs
-		}
+	s.stock[newBook.ID] = newStock
+	return newStock
+}
+
+func (s *Store) getStock(id string) (*Stock, error) {
+	stock, ok := s.stock[id]
+	if !ok {
+		return nil, fmt.Errorf("no book with id %s found", id)
 	}
-	newStock := NewStock(b, c)
-	s.stocks = append(s.stocks, newStock)
-	return *newStock
+
+	return &stock, nil
 }
