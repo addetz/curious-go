@@ -14,22 +14,22 @@ func TestAddStock(t *testing.T) {
 		increment int
 	}{
 		"empty store": {
-			book:      *enums.CreateBook("The Go Programming Language", enums.Technical, enums.Paperback),
+			book:      enums.CreateBook("The Go Programming Language", enums.Technical, enums.Paperback),
 			increment: 4,
 		},
 
 		"new book": {
-			book:      *enums.CreateBook("For Whom the Bell Tolls", enums.Novel, enums.Paperback),
+			book:      enums.CreateBook("For Whom the Bell Tolls", enums.Novel, enums.Paperback),
 			increment: 3,
 		},
 
 		"existing book": {
-			book:      *enums.CreateBook("The Go Programming Language", enums.Technical, enums.Paperback),
+			book:      enums.CreateBook("The Go Programming Language", enums.Technical, enums.Paperback),
 			increment: 2,
 		},
 
 		"existing book 2": {
-			book:      *enums.CreateBook("The Go Programming Language", enums.Technical, enums.Paperback),
+			book:      enums.CreateBook("The Go Programming Language", enums.Technical, enums.Paperback),
 			increment: 10,
 		},
 	}

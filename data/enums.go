@@ -1,5 +1,7 @@
 package enums
 
+import "github.com/google/uuid"
+
 type BookCategory int
 type BookFormat string
 
@@ -18,13 +20,16 @@ const (
 )
 
 type Book struct {
-	Title    string
-	Category BookCategory
-	Format   BookFormat
+	ID       string       `json:"-"`
+	Title    string       `json:"title"`
+	Category BookCategory `json:"category"`
+	Format   BookFormat   `json:"format"`
 }
 
 func CreateBook(title string, category BookCategory, format BookFormat) Book {
+	id := uuid.New().String()
 	return Book{
+		ID:       id,
 		Title:    title,
 		Category: category,
 		Format:   format,

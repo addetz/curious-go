@@ -16,8 +16,8 @@ type Book struct {
 	Category BookCategory
 }
 
-func CreateBook(title string, category BookCategory) *Book {
-	return &Book{
+func CreateBook(title string, category BookCategory) Book {
+	return Book{
 		Title:    title,
 		Category: category,
 	}

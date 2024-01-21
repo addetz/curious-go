@@ -23,8 +23,8 @@ type Book struct {
 	Format   BookFormat
 }
 
-func CreateBook(title string, category BookCategory, format BookFormat) *Book {
-	return &Book{
+func CreateBook(title string, category BookCategory, format BookFormat) Book {
+	return Book{
 		Title:    title,
 		Category: category,
 		Format:   format,

@@ -8,7 +8,7 @@ import (
 	enums "github.com/addetz/curious-go/json_operations"
 )
 
-func MarshallBook(b *enums.Book) ([]byte, error) {
+func MarshallBook(b enums.Book) ([]byte, error) {
 	// Create our own custom encoder
 	marshalledBook := new(bytes.Buffer)
 	enc := json.NewEncoder(marshalledBook)

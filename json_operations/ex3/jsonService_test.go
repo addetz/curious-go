@@ -49,7 +49,7 @@ func TestMarshallBook(t *testing.T) {
 		},
 	}
 
-	getExpectedMarshalledBook := func(b *enums.Book) string {
+	getExpectedMarshalledBook := func(b enums.Book) string {
 		return fmt.Sprintf("{\"title\":\"%s\",\"category\":%d,\"format\":\"%s\"}",
 			b.Title, b.Category, b.Format)
 	}
