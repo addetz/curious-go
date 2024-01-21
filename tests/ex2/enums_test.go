@@ -18,7 +18,7 @@ func TestBookCategory(t *testing.T) {
 		"novel": {
 			title:            "For Whom the Bell Tolls",
 			category:         enums.Novel,
-			format:           enums.Print,
+			format:           enums.Paperback,
 			expectedCategory: 1,
 			expectedFormat:   "Paperback",
 		},
@@ -26,20 +26,27 @@ func TestBookCategory(t *testing.T) {
 		"technical": {
 			title:            "The Go Programming Language",
 			category:         enums.Technical,
-			format:           enums.Print,
+			format:           enums.Hardback,
 			expectedCategory: 5,
-			expectedFormat:   "Paperback",
+			expectedFormat:   "Hardback",
 		},
 
 		"bio": {
 			title:            "Becoming",
 			category:         enums.Biography,
-			format:           enums.Ebook,
+			format:           enums.Kindle,
 			expectedCategory: 6,
-			expectedFormat:   "Ebook",
+			expectedFormat:   "Kindle",
+		},
+
+		"novel special character": {
+			title:            "The Daughter of Smoke & Bone",
+			category:         enums.Novel,
+			format:           enums.PDF,
+			expectedCategory: 1,
+			expectedFormat:   "PDF",
 		},
 	}
-
 	for name, tc := range testCases {
 		t.Run(name, func(t *testing.T) {
 			currentName, currentTc := name, tc

@@ -8,21 +8,19 @@ const (
 	Hardback  BookFormat = "Hardback"
 	Kindle    BookFormat = "Kindle"
 	PDF       BookFormat = "PDF"
-)
 
-const (
-	Novel BookCategory = iota + 1
-	FairyTale
-	Drama
-	Poetry
-	Technical
-	Biography
+	Novel     BookCategory = 1
+	FairyTale BookCategory = 2
+	Drama     BookCategory = 3
+	Poetry    BookCategory = 4
+	Technical BookCategory = 5
+	Biography BookCategory = 6
 )
 
 type Book struct {
-	Title    string
-	Category BookCategory
-	Format   BookFormat
+	Title    string       `json:"title"`
+	Category BookCategory `json:"category"`
+	Format   BookFormat   `json:"format"`
 }
 
 func CreateBook(title string, category BookCategory, format BookFormat) *Book {

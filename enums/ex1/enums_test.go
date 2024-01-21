@@ -29,6 +29,12 @@ func TestBookCategory(t *testing.T) {
 			category:         enums.Biography,
 			expectedCategory: 6,
 		},
+
+		"novel special character": {
+			title:            "The Daughter of Smoke & Bone",
+			category:         enums.Novel,
+			expectedCategory: 1,
+		},
 	}
 
 	for name, tc := range testCases {

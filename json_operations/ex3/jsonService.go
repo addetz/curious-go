@@ -4,8 +4,9 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"strings"
 
-	enums "github.com/addetz/curious-go/enums/ex6"
+	enums "github.com/addetz/curious-go/json_operations"
 )
 
 func MarshallBook(b *enums.Book) ([]byte, error) {
@@ -17,5 +18,7 @@ func MarshallBook(b *enums.Book) ([]byte, error) {
 		return nil, fmt.Errorf("MarshallBook %v: %v", b, err)
 	}
 
-	return marshalledBook.Bytes(), nil
+	out := strings.Trim(marshalledBook.String(), "\n")
+
+	return []byte(out), nil
 }

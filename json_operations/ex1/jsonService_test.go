@@ -1,12 +1,14 @@
-package enums_test
+package jsonoperations_test
 
 import (
+	"fmt"
 	"testing"
 
-	enums "github.com/addetz/curious-go/enums/ex4"
+	enums "github.com/addetz/curious-go/json_operations"
+	jsonoperations "github.com/addetz/curious-go/json_operations/ex1"
 )
 
-func TestBookCategory(t *testing.T) {
+func TestMarshallBook(t *testing.T) {
 	testCases := map[string]struct {
 		title            string
 		category         enums.BookCategory
@@ -47,14 +49,21 @@ func TestBookCategory(t *testing.T) {
 		},
 	}
 
+	getExpectedMarshalledBook := func(b *enums.Book) string {
+		return fmt.Sprintf("{\"title\":\"%s\",\"category\":%d,\"format\":\"%s\"}",
+			b.Title, b.Category, b.Format)
+	}
+
 	for name, tc := range testCases {
 		t.Run(name, func(t *testing.T) {
 			book := enums.CreateBook(tc.title, tc.category, tc.format)
-			if book.Category != enums.BookCategory(tc.expectedCategory) {
-				t.Fatalf("[%s]: incorrect category; got %d, want %d", name, book.Category, tc.expectedCategory)
+			marshalled, err := jsonoperations.MarshallBook(book)
+			if err != nil {
+				t.Fatalf("[%s]: unexpected error: %v", name, err)
 			}
-			if book.Format != enums.BookFormat(tc.expectedFormat) {
-				t.Fatalf("[%s]: incorrect format; got %s, want %s", name, book.Format, tc.expectedFormat)
+			output, expectedOutput := string(marshalled), getExpectedMarshalledBook(book)
+			if output != expectedOutput {
+				t.Fatalf("[%s]: incorrect marshalled output; got %s, want %s", name, output, expectedOutput)
 			}
 		})
 	}

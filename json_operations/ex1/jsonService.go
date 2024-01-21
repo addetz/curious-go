@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	enums "github.com/addetz/curious-go/enums/ex6"
+	enums "github.com/addetz/curious-go/json_operations"
 )
 
 func MarshallBook(b *enums.Book) ([]byte, error) {
