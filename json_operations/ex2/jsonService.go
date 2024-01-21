@@ -9,6 +9,7 @@ import (
 )
 
 func MarshallBook(b *enums.Book) ([]byte, error) {
+	// Create our own custom encoder
 	marshalledBook := new(bytes.Buffer)
 	enc := json.NewEncoder(marshalledBook)
 	enc.SetEscapeHTML(false)

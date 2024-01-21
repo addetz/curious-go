@@ -10,6 +10,7 @@ import (
 )
 
 func MarshallBook(b *enums.Book) ([]byte, error) {
+	// Create our own custom encoder
 	marshalledBook := new(bytes.Buffer)
 	enc := json.NewEncoder(marshalledBook)
 	enc.SetEscapeHTML(false)
@@ -18,6 +19,7 @@ func MarshallBook(b *enums.Book) ([]byte, error) {
 		return nil, fmt.Errorf("MarshallBook %v: %v", b, err)
 	}
 
+	// Trim the new lines
 	out := strings.Trim(marshalledBook.String(), "\n")
 
 	return []byte(out), nil
