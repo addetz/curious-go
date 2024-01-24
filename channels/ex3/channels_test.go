@@ -9,7 +9,7 @@ import (
 
 func TestAddStock(t *testing.T) {
 	store := channels.NewStore()
-	testBook := enums.CreateBook("The Go Programming Language", enums.Technical, enums.Paperback)
+	testBook := enums.NewBook("The Go Programming Language", enums.Technical, enums.Paperback)
 	testCases := map[string]struct {
 		book          enums.Book
 		increment     int
@@ -22,7 +22,7 @@ func TestAddStock(t *testing.T) {
 		},
 
 		"new book": {
-			book:          enums.CreateBook("For Whom the Bell Tolls", enums.Novel, enums.Paperback),
+			book:          enums.NewBook("For Whom the Bell Tolls", enums.Novel, enums.Paperback),
 			increment:     3,
 			expectedCount: 3,
 		},

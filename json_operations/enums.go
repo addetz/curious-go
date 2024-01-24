@@ -23,7 +23,7 @@ type Book struct {
 	Format   BookFormat   `json:"format"`
 }
 
-func CreateBook(title string, category BookCategory, format BookFormat) Book {
+func NewBook(title string, category BookCategory, format BookFormat) Book {
 	return Book{
 		Title:    title,
 		Category: category,

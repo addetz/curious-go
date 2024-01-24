@@ -56,7 +56,7 @@ func TestMarshallBook(t *testing.T) {
 
 	for name, tc := range testCases {
 		t.Run(name, func(t *testing.T) {
-			book := enums.CreateBook(tc.title, tc.category, tc.format)
+			book := enums.NewBook(tc.title, tc.category, tc.format)
 			marshalled, err := jsonoperations.MarshallBook(book)
 			if err != nil {
 				t.Fatalf("[%s]: unexpected error: %v", name, err)

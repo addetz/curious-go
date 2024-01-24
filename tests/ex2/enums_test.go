@@ -51,7 +51,7 @@ func TestBookCategory(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			currentName, currentTc := name, tc
 			t.Parallel()
-			book := enums.CreateBook(currentTc.title, currentTc.category, currentTc.format)
+			book := enums.NewBook(currentTc.title, currentTc.category, currentTc.format)
 			log.Println(book)
 			if book.Category != enums.BookCategory(currentTc.expectedCategory) {
 				t.Fatalf("[%s]: incorrect category; got %d, want %d", currentName, book.Category, currentTc.expectedCategory)

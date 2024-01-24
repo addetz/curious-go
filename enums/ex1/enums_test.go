@@ -39,7 +39,7 @@ func TestBookCategory(t *testing.T) {
 
 	for name, tc := range testCases {
 		t.Run(name, func(t *testing.T) {
-			book := enums.CreateBook(tc.title, tc.category)
+			book := enums.NewBook(tc.title, tc.category)
 			if book.Category != enums.BookCategory(tc.expectedCategory) {
 				t.Fatalf("[%s]: incorrect category; got %d, want %d", name, book.Category, tc.expectedCategory)
 			}

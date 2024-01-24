@@ -17,7 +17,7 @@ type Book struct {
 	Category BookCategory
 }
 
-func CreateBook(title string, category BookCategory) Book {
+func NewBook(title string, category BookCategory) Book {
 	return Book{
 		Title:    title,
 		Category: category,
