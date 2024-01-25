@@ -20,10 +20,10 @@ const (
 )
 
 type Book struct {
-	ID       string       `json:"-"`
-	Title    string       `json:"title"`
-	Category BookCategory `json:"category"`
-	Format   BookFormat   `json:"format"`
+	ID       string
+	Title    string
+	Category BookCategory
+	Format   BookFormat
 }
 
 func NewBook(title string, category BookCategory, format BookFormat) Book {
