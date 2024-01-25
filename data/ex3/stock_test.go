@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	enums "github.com/addetz/curious-go/data"
-	data "github.com/addetz/curious-go/data/ex2"
+	data "github.com/addetz/curious-go/data/ex3"
 )
 
 func TestAddStock(t *testing.T) {
