@@ -21,17 +21,16 @@ func NewStore() *Store {
 	}
 }
 
-func (s *Store) AddStock(newBook enums.Book, count int) Stock {
-	newStock := Stock{
-		Book:  newBook,
-		Count: count,
-	}
+func (s *Store) AddStock(newBook enums.Book, count int) {
+	existingStock := 0
 	if stock, ok := s.stock[newBook.ID]; ok {
-		newStock.Count += stock.Count
+		existingStock = stock.Count
 	}
-	
-	s.stock[newBook.ID] = newStock
-	return newStock
+
+	s.stock[newBook.ID] = Stock{
+		Book:  newBook,
+		Count: count + existingStock,
+	}
 }
 
 func (s *Store) GetStock(id string) (*Stock, error) {

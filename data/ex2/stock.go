@@ -21,7 +21,7 @@ func NewStore() *Store {
 	}
 }
 
-func (s *Store) AddStock(newBook enums.Book, count int) Stock {
+func (s *Store) AddStock(newBook enums.Book, count int) {
 	stock, ok := s.stock[newBook.ID]
 	if !ok {
 		newStock := &Stock{
@@ -29,12 +29,11 @@ func (s *Store) AddStock(newBook enums.Book, count int) Stock {
 			Count: count,
 		}
 		s.stock[newBook.ID] = newStock
-		return *newStock
+		return
 	}
 
 	newCount := stock.Count + count
 	stock.Count = newCount
-	return *stock
 }
 
 func (s *Store) GetStock(id string) (*Stock, error) {

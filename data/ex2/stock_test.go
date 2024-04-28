@@ -9,36 +9,34 @@ import (
 
 func TestAddStock(t *testing.T) {
 	store := data.NewStore()
-	testBook := enums.NewBook("The Go Programming Language", enums.Technical, enums.Paperback)
 	testCases := map[string]struct {
 		book          enums.Book
-		increment     int
+		increment     []int
 		expectedCount int
 	}{
 		"empty store": {
-			book:          testBook,
-			increment:     4,
+			book:          enums.NewBook("The Go Programming Language", enums.Technical, enums.Paperback),
+			increment:     []int{4},
 			expectedCount: 4,
 		},
 
 		"new book": {
 			book:          enums.NewBook("For Whom the Bell Tolls", enums.Novel, enums.Paperback),
-			increment:     3,
+			increment:     []int{3},
 			expectedCount: 3,
 		},
 
 		"existing book": {
-			book:          testBook,
-			increment:     2,
+			book:          enums.NewBook("The Bell Jar", enums.Novel, enums.Paperback),
+			increment:     []int{2, 4},
 			expectedCount: 6,
 		},
 	}
 
 	for name, tc := range testCases {
 		t.Run(name, func(t *testing.T) {
-			stock := store.AddStock(tc.book, tc.increment)
-			if stock.Count != tc.expectedCount {
-				t.Fatalf("[%s]: incorrect returned count; got %d, want %d", name, stock.Count, tc.expectedCount)
+			for _, inc := range tc.increment {
+				store.AddStock(tc.book, inc)
 			}
 			retrievedStock, err := store.GetStock(tc.book.ID)
 			if err != nil {
